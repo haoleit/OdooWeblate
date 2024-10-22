@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="estate_property_1" model="estate.property">
+            <field name="name">Sunny Villa</field>
+            <field name="description">A beautiful villa with a spacious garden and modern design.</field>
+            <field name="postcode">12345</field>
+            <field name="date_availability">2024-12-01</field>
+            <field name="expected_price">750000</field>
+            <field name="selling_price">700000</field>
+            <field name="bed_room">4</field>
+            <field name="living_area">180</field>
+            <field name="farcades">2</field>
+            <field name="garage">True</field>
+            <field name="garden">True</field>
+            <field name="garden_area">50</field>
+            <field name="garden_orientation">north</field>
+        </record>
+
+        <record id="estate_property_2" model="estate.property">
+            <field name="name">Cozy Apartment</field>
+            <field name="description">A cozy apartment with a wonderful view of the city.</field>
+            <field name="postcode">67890</field>
+            <field name="date_availability">2024-11-15</field>
+            <field name="expected_price">300000</field>
+            <field name="selling_price">285000</field>
+            <field name="bed_room">2</field>
+            <field name="living_area">85</field>
+            <field name="farcades">1</field>
+            <field name="garage">False</field>
+            <field name="garden">False</field>
+            <field name="garden_area">0</field>
+            <field name="garden_orientation">west</field>
+        </record>
+    </data>
+</odoo>
