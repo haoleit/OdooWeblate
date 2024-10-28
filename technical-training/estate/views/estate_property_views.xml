@@ -23,30 +23,65 @@
             <form string="Estate Property">
                 <sheet>
                     <group>
+                        <label for="name" string="Name" style="font-size:14px;" />
+                        <field name="name" style="font-size:24px; font-weight:bold;" />
+
                         <group>
-                            <field name="name" />
+                            <field name="tag_ids" widget="many2many_tags" />
+                            <field name="property_type_id" />
                             <field name="postcode" />
                             <field name="date_availability" />
                         </group>
                         <group>
                             <field name="expected_price" />
                             <field name="selling_price" />
+                            <field name="total_area" readonly="1" />
+                            <field name="best_price" readonly="1" />
                         </group>
                     </group>
                     <notebook>
                         <page string="Description">
                             <field name="description" />
+                            <group>
+                                <group>
+                                    <field name="bed_room" />
+                                    <field name="living_area" />
+                                    <field name="garage" />
+                                    <field name="garden" />
+                                    <field name="garden_area" />
+                                </group>
+                                <group>
+                                    <field name="garden" />
+                                    <field name="garden_area"
+                                        attrs="{'invisible': [('garden', '=', False)]}" />
+                                    <field name="garden_orientation"
+                                        attrs="{'invisible': [('garden', '=', False)]}" />
+                                </group>
+                            </group>
                         </page>
+                        <page string="Offers">
+                            <field name="offer_ids" mode="tree,form">
+                                <tree>
+                                    <field name="price" />
+                                    <field name="partner_id" />
+                                    <field name="status" />
+                                </tree>
+                                <form>
+                                    <field name="price" />
+                                    <field name="partner_id" />
+                                    <field name="status" />
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Other Info">
+                            <group>
+                                <field name="salesperson_id" />
+                                <field name="buyer_id" />
+                            </group>
+                        </page>
+
                     </notebook>
-                    <group>
-                        <group>
-                            <field name="bed_room" />
-                            <field name="living_area" />
-                            <field name="garage" />
-                            <field name="garden" />
-                            <field name="garden_area" />
-                        </group>
-                    </group>
+
                 </sheet>
             </form>
         </field>
@@ -79,6 +114,7 @@
             </search>
         </field>
     </record>
+
 
     <record id="action_estate_property" model="ir.actions.act_window">
         <field name="name">Properties</field>
