@@ -1,6 +1,6 @@
 from datetime import timedelta
 from odoo import api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 
 
 class EstatePropertyOffer(models.Model):
@@ -27,7 +27,9 @@ class EstatePropertyOffer(models.Model):
         required=True
     )
     property_type_id = fields.Many2one(
-        related="property_id.property_type_id"
+        related="property_id.property_type_id",
+        store=True,
+        string="Property Type"
     )
     validity = fields.Integer(
         string="Validity (days)", 
@@ -57,4 +59,23 @@ class EstatePropertyOffer(models.Model):
             if record.status=="accepted":
                 raise ValidationError("Can not Delete Offer Accepted") 
         return super().unlink()
+    
+    def action_accept(self):
+        if self.property_id.state == "sold":
+            raise UserError("This property has already been sold")
+        if self.status == "refused":
+            raise UserError("Offer already Refused.Please make another offer")
+        accepted_offers = self.property_id.offer_ids.filtered(lambda o: o.status == 'accepted')
+
+        self.status = 'accepted'
+
+        total_selling_price = sum(offer.price for offer in accepted_offers)
+
+        self.property_id.write({
+            'buyer_id' : self.env.user.partner_id.id,
+            'selling_price': total_selling_price,
+        })
+
+    def action_refuse(self):
+        self.status = "refused"
     

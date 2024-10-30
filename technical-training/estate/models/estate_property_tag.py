@@ -13,6 +13,7 @@ class EstatePropertyTag(models.Model):
 
     _sql_constraints = [
         ('name_unique', 'UNIQUE(LOWER(name))', 'The property type name must be unique')
+        
     ]
 
     @api.constrains('name')

@@ -95,6 +95,12 @@ class EstateProperty(models.Model):
     )
 
 
+    _sql_constraints = [
+        ('check_expected_price_positive', 'CHECK(expected_price > 0)', 'The expected price must be strictly positive'),
+        ('check_selling_price_non_negative', 'CHECK(selling_price >= 0)', 'The selling price must be positive'),
+        ('check_offer_price_positive', 'CHECK(price > 0)', 'The offer price must be strictly positive')
+    ]
+
     @api.depends('living_area', 'garden_area')
     def _compute_total_area(self):
         for record in self:
@@ -111,11 +117,11 @@ class EstateProperty(models.Model):
     @api.onchange('garden')
     def onchange_garden(self):
         if self.garden:
-            self.garden_area=50
-            self.garden_orientation='north'
+            self.garden_area = 50
+            self.garden_orientation = 'north'
         else:
-            self.garden_area=0
-            self.garden_orientation=False
+            self.garden_area = 0
+            self.garden_orientation = False
 
     @api.constrains('date_availability')
     def _check_date_availability(self):
@@ -123,11 +129,17 @@ class EstateProperty(models.Model):
             if record.date_availability and record.date_availability < fields.Date.today():
                 raise ValidationError("Date Availability cannot be set to a date prior to today.")
             
+    @api.constrains('selling_price', 'expected_price')
+    def _check_selling_price_above_90_percent(self):
+        for record in self:
+            if record.selling_price > 0 and record.selling_price < 0.9 * record.expected_price:
+                raise ValidationError("The selling price cannot be lower than 90% of the expected price")
+            
     @api.model_create_multi
     def create(self,vals_list):
         for vals in vals_list:
-            if not vals.get('code') or vals['code']=="New":
-                vals['code']=self.env['ir.sequence'].next_by_code('estate.property.code')
+            if not vals.get('code') or vals['code'] == "New":
+                vals['code'] = self.env['ir.sequence'].next_by_code('estate.property.code')
         return super().create(vals_list)
     
 
@@ -137,8 +149,13 @@ class EstateProperty(models.Model):
             record.code = self.env['ir.sequence'].next_by_code('estate.property.code')
 
     def action_cancel(self):
-        if self.state=='sold':
-            raise UserError("A sold property can not be cancelled")
+        if self.state == 'sold':
+            raise UserError(_("A sold property can not be cancelled"))
+        self.state = "canceled"
+        
+    def action_sold(self):
+        if self.state == "canceled":
+            raise UserError(_("A sold property can not be sold"))
+        self.state = "sold"
 
-
-  
+ 

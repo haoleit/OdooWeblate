@@ -23,12 +23,28 @@
         <field name="arch" type="xml">
             <form string="Estate Property">
                 <sheet>
-                    <group>
 
+                    <header>
+                        <button
+                            name="action_cancel"
+                            string="Cancel"
+                            type="object"
+                            class="btn-secondary"
+                            attrs="{'invisible': [('state', '=', 'canceled')]}" />
+                        <button
+                            name="action_sold"
+                            string="Sold"
+                            type="object"
+                            class="btn-primary"
+                            attrs="{'invisible': [('state', '=', 'sold')]}" />
+
+
+                        <field name="state" widget="statusbar" />
+                    </header>
+                    <group>
                         <field name="code" style="font-size:24px; font-weight:bold;" readonly="1" />
                         <field name="name" style="font-size:20px;" />
                         <!-- <label for="name" string="Name" style="font-size:14px;" /> -->
-
                         <group>
                             <field name="tag_ids" widget="many2many_tags" />
                             <field name="property_type_id" />
@@ -67,11 +83,17 @@
                                 <tree>
                                     <field name="price" />
                                     <field name="partner_id" />
+                                    <field name="validity" />
+                                    <field name="date_deadline" />
+                                    <button name="action_accept" type="object" icon="fa-check" />
+                                    <button name="action_refuse" type="object" icon="fa-times" />
                                     <field name="status" />
                                 </tree>
                                 <form>
                                     <field name="price" />
                                     <field name="partner_id" />
+                                    <field name="validity" />
+                                    <field name="date_deadline" />
                                     <field name="status" />
                                 </form>
                             </field>
