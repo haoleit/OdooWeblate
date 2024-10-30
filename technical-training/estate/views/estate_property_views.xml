@@ -5,6 +5,7 @@
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <tree string="Estate Property List">
+                <field name="code" />
                 <field name="name" />
                 <field name="postcode" />
                 <field name="bed_room" />
@@ -23,8 +24,10 @@
             <form string="Estate Property">
                 <sheet>
                     <group>
-                        <label for="name" string="Name" style="font-size:14px;" />
-                        <field name="name" style="font-size:24px; font-weight:bold;" />
+
+                        <field name="code" style="font-size:24px; font-weight:bold;" readonly="1" />
+                        <field name="name" style="font-size:20px;" />
+                        <!-- <label for="name" string="Name" style="font-size:14px;" /> -->
 
                         <group>
                             <field name="tag_ids" widget="many2many_tags" />
@@ -92,7 +95,7 @@
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <search string="Estate Property Search">
-
+                <field name="code" string="Code" />
                 <field name="name" string="Title" />
                 <field name="postcode" />
                 <field name="expected_price" />

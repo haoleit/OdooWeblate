@@ -1,5 +1,6 @@
 from datetime import timedelta
 from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class EstatePropertyOffer(models.Model):
@@ -46,5 +47,14 @@ class EstatePropertyOffer(models.Model):
             else:
                 record.date_deadline = fields.Date.today() + timedelta(days=record.validity)
 
-  
+    def update(self, values):
+        for record in self:
+            if record.status=="accepted":
+                raise ValidationError("Can not Edit Offer Accepted")
+        return super().update(values)
+    def unlink(self):
+        for record in self:
+            if record.status=="accepted":
+                raise ValidationError("Can not Delete Offer Accepted") 
+        return super().unlink()
     

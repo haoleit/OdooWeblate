@@ -1,7 +1,6 @@
-from odoo import api, fields, models
 from datetime import timedelta
-
-from odoo.exceptions import ValidationError
+from odoo import api, fields, models
+from odoo.exceptions import UserError, ValidationError
 
 
 class EstateProperty(models.Model):
@@ -83,11 +82,18 @@ class EstateProperty(models.Model):
         compute="_compute_total_area",
         store=True
     )
-    best_price=fields.Float(
+    best_price = fields.Float(
         string="Best Price",
         compute="_compute_best_price",
         store=True
     )
+    code = fields.Char(
+        string="Code",
+        readonly=True,
+        copy=False,
+        default="New"
+    )
+
 
     @api.depends('living_area', 'garden_area')
     def _compute_total_area(self):
@@ -116,3 +122,23 @@ class EstateProperty(models.Model):
         for record in self:
             if record.date_availability and record.date_availability < fields.Date.today():
                 raise ValidationError("Date Availability cannot be set to a date prior to today.")
+            
+    @api.model_create_multi
+    def create(self,vals_list):
+        for vals in vals_list:
+            if not vals.get('code') or vals['code']=="New":
+                vals['code']=self.env['ir.sequence'].next_by_code('estate.property.code')
+        return super().create(vals_list)
+    
+
+    def assign_sequence_to_old_records(self):
+        records_to_update = self.search([('code', '=', "New")])
+        for record in records_to_update:
+            record.code = self.env['ir.sequence'].next_by_code('estate.property.code')
+
+    def action_cancel(self):
+        if self.state=='sold':
+            raise UserError("A sold property can not be cancelled")
+
+
+  
