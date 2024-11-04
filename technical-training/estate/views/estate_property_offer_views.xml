@@ -5,7 +5,11 @@
         <field name="name">estate.property.offer.tree</field>
         <field name="model">estate.property.offer</field>
         <field name="arch" type="xml">
-            <tree string="Offers">
+            <tree
+                string="Offers"
+                decoration-danger="status == 'refused'"
+                decoration-success="status == 'accepted'"
+                editable="bottom">
                 <field name="property_id" />
                 <field name="partner_id" />
                 <field name="price" />
@@ -23,8 +27,17 @@
         <field name="model">estate.property.offer</field>
         <field name="arch" type="xml">
             <form string="Property Offer">
+                <header>
+                    <button name="action_accept" type="object" string="Accept"
+                        attrs="{'invisible': [('status', 'in', ['accepted', 'refused'])]}"
+                        class="btn-primary" />
+                    <button name="action_refuse" type="object" string="Refuse"
+                        attrs="{'invisible': [('status', 'in', ['accepted', 'refused'])]}"
+                        class="btn-secondary" />
+                </header>
                 <sheet>
                     <group>
+
                         <field name="property_id" />
                         <field name="partner_id" />
                         <field name="price" />

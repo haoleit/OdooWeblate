@@ -41,6 +41,12 @@ class EstatePropertyOffer(models.Model):
         store=True
     )
     
+    @api.depends('property_id.state')
+    def _compute_restricted_state(self):
+        for record in self:
+            record.restricted_state = record.property_id.state in ['offer_accepted', 'sold', 'canceled']
+
+
     @api.depends('create_date', 'validity')
     def _compute_date_deadline(self):
         for record in self:
