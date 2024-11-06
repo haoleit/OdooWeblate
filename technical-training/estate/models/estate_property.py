@@ -1,13 +1,14 @@
 from datetime import timedelta
-from odoo import api, fields, models
+from odoo import api, fields, models,_
 from odoo.exceptions import UserError, ValidationError
 
 
 class EstateProperty(models.Model):
     _name = "estate.property"
     _description = "Estate Property"
+    _inherit = ["mail.thread", "mail.activity.mixin"] 
 
-    name = fields.Char(string="Name", required=True)
+    name = fields.Char(string="Name", required=True,tracking=True)
     description = fields.Text(string="Description")
     postcode = fields.Char(string="Post Code")
     date_availability = fields.Date(
@@ -48,7 +49,8 @@ class EstateProperty(models.Model):
         string="State",
         required=True,
         copy=False,
-        default='new'
+        default='new',
+        tracking=True
         
     )
     property_type_id = fields.Many2one(
@@ -156,7 +158,14 @@ class EstateProperty(models.Model):
         
     def action_sold(self):
         if self.state == "canceled":
-            raise UserError(_("A sold property can not be sold"))
+            raise UserError(("A sold property can not be sold"))
         self.state = "sold"
+    
+    
+    def unlink(self):
+        for record in self:
+            if record.state not in ['new', 'canceled']:
+                raise UserError("You can only delete properties in 'New' or 'Canceled' state")
+        return super(EstateProperty, self).unlink()
 
  

@@ -71,17 +71,32 @@ class EstatePropertyOffer(models.Model):
             raise UserError("This property has already been sold")
         if self.status == "refused":
             raise UserError("Offer already Refused.Please make another offer")
-        accepted_offers = self.property_id.offer_ids.filtered(lambda o: o.status == 'accepted')
-
+        
         self.status = 'accepted'
+        accepted_offers = self.property_id.offer_ids.filtered(lambda o: o.status == 'accepted')
+        
+      
 
         total_selling_price = sum(offer.price for offer in accepted_offers)
-
+        
         self.property_id.write({
             'buyer_id' : self.env.user.partner_id.id,
             'selling_price': total_selling_price,
         })
+        self.property_id._load_buyer_email()
 
     def action_refuse(self):
         self.status = "refused"
     
+    @api.model
+    def create(self, vals):
+        
+        property = self.env['estate.property'].browse(vals['property_id'])
+        if property.state == 'new':
+            property.state = 'offer_received'
+        
+        
+        if property.best_price and vals['price'] < property.best_price:
+            raise ValidationError("You cannot create an offer lower than the existing best offer price")
+        
+        return super(EstatePropertyOffer, self).create(vals)
