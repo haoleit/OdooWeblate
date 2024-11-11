@@ -9,5 +9,6 @@
             "database": "admin",
             "username": "odoo"
         }
-    ]
+    ],
+    "editor.formatOnSave": true
 }

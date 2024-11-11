@@ -9,7 +9,8 @@ Module Estate provide management solution.
 """,
     'category': 'Estate',
     'depends': ['base',
-                'mail'],
+                'mail',
+                'report_xlsx'],
     'data': [
         'data/demo.xml',
         'data/res_groups.xml',
@@ -20,6 +21,9 @@ Module Estate provide management solution.
         'views/estate_property_tag_views.xml',
         'views/estate_property_offer_views.xml',
         'views/estate_user_views.xml',
+        "wizards/report_buyer_offers_xlsx.xml",
+        'reports/report_buyer_offer_views.xml',
+        'reports/report.xml',
         'views/estate_menu.xml', 
     ],
     

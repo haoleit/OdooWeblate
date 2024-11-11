@@ -62,4 +62,21 @@
         sequence="1"
     />
 
+
+    <menuitem
+        id="menu_estate_property_reporting"
+        name="Reporting"
+        parent="menu_estate_root"
+        sequence="3"
+    />
+    <menuitem id="menu_estate_property_report"
+        name="Buyer Offer Report"
+        parent="menu_estate_property_reporting"
+        action="action_reporting_buyer_offers" 
+        sequence="1"/>
+    <menuitem id="menu_estate_property_report_xlsx"
+        name="Buyer Offer Report XLSX"
+        parent="menu_estate_property_reporting"
+        action="action_report_buyer_offers_xlsx_wizard"
+        sequence="2" />
 </odoo>
