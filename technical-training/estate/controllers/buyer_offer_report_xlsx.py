@@ -5,14 +5,21 @@ from datetime import datetime
 class BuyerOfferReportController(http.Controller):
 
     @http.route('/estate/buyer_offer_report_xlsx', type='http', auth='user', csrf=False)
-    def generate_buyer_offer_report_xlsx(self, start_date, end_date):
+    def generate_buyer_offer_report_xlsx(self, start_date, end_date,buyer_id):
         
        start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
        end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
 
        
+       if not buyer_id or buyer_id == 'False':
+            buyer_id = None
+       else:
+            buyer_id = int(buyer_id)
+        
+       
+
        report_model = request.env['report.estate.buyer_offers_xlsx_report']
-       file_content = report_model.create_excel_report(start_date, end_date)
+       file_content = report_model.create_excel_report(start_date, end_date,buyer_id)
 
         
        headers = [

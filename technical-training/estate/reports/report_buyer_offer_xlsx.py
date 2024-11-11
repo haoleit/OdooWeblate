@@ -7,7 +7,7 @@ class EstatePropertyXlsxReport(models.AbstractModel):
     _name = 'report.estate.buyer_offers_xlsx_report'
     _inherit = 'report.report_xlsx.abstract'
 
-    def create_excel_report(self, start_date, end_date):
+    def create_excel_report(self, start_date, end_date, buyer_id):
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         sheet = workbook.add_worksheet('Buyer Offers')
@@ -40,13 +40,17 @@ class EstatePropertyXlsxReport(models.AbstractModel):
             sheet.write(11, col, header, header_format)
 
         # Search for property and report data
-        property_ids = self.env['estate.property'].search([
-            ('date_availability', '>=', start_date),
-            ('date_availability', '<=', end_date)
-        ]).ids
+        domain = [
+        ('date_availability', '>=', start_date),
+        ('date_availability', '<=', end_date),
+    ]
+        if buyer_id:
+            domain.append(('buyer_id', '=', buyer_id))
 
+        buyer_ids = self.env['estate.property'].search(domain).mapped('buyer_id').ids
+        
         records = self.env['report.buyer.offer'].search([
-            ('buyer_id', 'in', property_ids)
+            ('buyer_id', 'in', buyer_ids)
         ])
 
         # Write data to Excel

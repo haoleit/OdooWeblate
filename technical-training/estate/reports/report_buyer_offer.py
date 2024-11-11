@@ -53,12 +53,40 @@ class ReportBuyerOffer(models.Model):
                 SELECT 
                     row_number() OVER () AS id,
                     rp.id AS buyer_id,
-                    (SELECT COUNT(*) FROM estate_property ep_sub WHERE ep_sub.buyer_id = rp.id AND ep_sub.state = 'offer_accepted') AS property_accepted,
-                    (SELECT COUNT(*) FROM estate_property ep_sub WHERE ep_sub.buyer_id = rp.id AND ep_sub.state = 'sold') AS property_sold,
-                    (SELECT COUNT(*) FROM estate_property ep_sub WHERE ep_sub.buyer_id = rp.id AND ep_sub.state = 'canceled') AS property_cancel,
-                    COUNT(eo.id) FILTER (WHERE eo.status = 'accepted') AS offer_accepted,
-                    COUNT(eo.id) FILTER (WHERE eo.status = 'rejected') AS offer_rejected,
+                         
+                    (SELECT COUNT(*) 
+                        FROM estate_property ep_sub 
+                        WHERE ep_sub.buyer_id = rp.id 
+                        AND ep_sub.state = 'offer_accepted') 
+                        AS property_accepted,
+                         
+                    (SELECT COUNT(*) 
+                        FROM estate_property ep_sub 
+                        WHERE ep_sub.buyer_id = rp.id 
+                        AND ep_sub.state = 'sold') 
+                        AS property_sold,
+                         
+                    (SELECT COUNT(*) 
+                        FROM estate_property ep_sub 
+                        WHERE ep_sub.buyer_id = rp.id 
+                        AND ep_sub.state = 'canceled') AS property_cancel,
+                         
+                    (SELECT COUNT(*) 
+                        FROM estate_property_offer eo_sub 
+                        WHERE eo_sub.property_id IN (
+                            SELECT id FROM estate_property WHERE buyer_id = rp.id ) 
+                        AND eo_sub.status = 'accepted') 
+                        AS offer_accepted,
+                         
+                    (SELECT COUNT(*) 
+                        FROM estate_property_offer eo_sub 
+                        WHERE eo_sub.property_id IN (
+                            SELECT id FROM estate_property WHERE buyer_id = rp.id ) 
+                        AND eo_sub.status = 'rejected') 
+                        AS offer_rejected,
+                         
                     MAX(eo.price) AS max_price_offer,
+                         
                     MIN(eo.price) AS min_price_offer
                 FROM 
                     estate_property ep
