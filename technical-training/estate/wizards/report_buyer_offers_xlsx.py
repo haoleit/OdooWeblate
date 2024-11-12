@@ -6,12 +6,13 @@ class BuyerOfferExportXlsxWizard(models.TransientModel):
 
     start_date = fields.Date(string="Date From", required=True)
     end_date = fields.Date(string="Date To", required=True)
-    buyer_id=fields.Many2one('res.partner',string="Buyer")
+    buyer_ids = fields.Many2many('res.partner', string="Buyers")
 
     def action_export_excel(self):
         # Gọi controller để xuất báo cáo
+        buyer_ids = ','.join(map(str, self.buyer_ids.ids)) if self.buyer_ids else ''
         return {
             'type': 'ir.actions.act_url',
-            'url': f'/estate/buyer_offer_report_xlsx?start_date={self.start_date}&end_date={self.end_date}&buyer_id={self.buyer_id.id}',
+            'url': f'/estate/buyer_offer_report_xlsx?start_date={self.start_date}&end_date={self.end_date}&buyer_ids={buyer_ids}',
             'target': 'self',
         }
