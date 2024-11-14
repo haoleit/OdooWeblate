@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="estate_demo_widget_form_view" model="ir.ui.view">
+        <field name="name">demo.widget.form</field>
+        <field name="model">demo.widget</field>
+        <field name="arch" type="xml">
+            <form>   
+                
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="color" widget="int_color"/>
+                        <field name="date" widget="mm_yyyy"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="estate_demo_widget_tree_view" model="ir.ui.view">
+        <field name="name">demo.widget.tree</field>
+        <field name="model">demo.widget</field>
+        <field name="arch" type="xml">
+            <tree js_class="tree_with_button">
+                <!-- <header>
+                    <button name="action_show_popup" type="object" string="Click me" class="btn-primary"   />
+                </header> -->
+                <field name="name"/>
+                <field name="color" widget="int_color"/>
+                <field name="date" widget="mm_yyyy"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_demo_widget" model="ir.actions.act_window">
+        <field name="name">Demo Widget</field>
+        <field name="res_model">demo.widget</field>
+        <field name="view_mode">tree,form</field>
+
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new property type.
+            </p>
+        </field>
+    </record>
+    
+</odoo>

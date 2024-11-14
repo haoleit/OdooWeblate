@@ -1,0 +1,15 @@
+.o_date_mm_yyyy {
+    .o_input {
+        width: 120px;
+        padding: 5px;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    &.readonly {
+        font-size: 16px;
+        color: #333;
+        padding: 5px;
+        text-align: center;
+    }
+}
