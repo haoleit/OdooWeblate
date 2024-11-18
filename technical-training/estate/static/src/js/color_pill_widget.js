@@ -28,6 +28,10 @@ odoo.define("estate.color_piller", function (require) {
       }
     },
 
+    isSet: function () {
+      return true;
+    },
+
     _fetchColorCount: function () {
       // Make an RPC call to get the count of records with the selected color
       var self = this;
@@ -56,10 +60,13 @@ odoo.define("estate.color_piller", function (require) {
         this.$el.find(".color_count").text("colorCount " + this.colorCount);
       }
     },
-
+    isSet: function () {
+      console.log(this.value);
+      return true;
+    },
     _renderEdit: function () {
       this.$el.empty();
-      for (let i = 1; i <= this.totalColors; i++) {
+      for (let i = 0; i <= this.totalColors; i++) {
         var className = "o_color_pill o_color_" + i;
         if (this.value === i) {
           className += " active";

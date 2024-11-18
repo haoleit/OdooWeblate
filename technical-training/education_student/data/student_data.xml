@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <record id="student_1" model="education.student">
+        <field name="name">John Doe</field>
+        <field name="image_1024" type="base64" file="education_student/static/src/images/student-1.png"></field>
+    </record>
+    <record id="student_2" model="education.student">
+        <field name="name">Jane Smith</field>
+        <field name="image_1024" type="base64" file="education_student/static/src/images/student-2.png"></field>
+    </record>
+    <record id="student_3" model="education.student">
+        <field name="name">Base Jame</field>
+        <field name="image_1024" type="base64" file="education_student/static/src/images/student-3.png"></field>
+    </record>
+</odoo>

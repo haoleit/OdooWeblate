@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="TreeView.Checkboxes">
+            <label>
+                <input type="checkbox" class="hide-color-checkbox" />
+                Hide Color
+            </label>
+            <label>
+                <input type="checkbox" class="hide-date-checkbox" />
+                Hide Date
+            </label>
+            <button type="button" class="btn btn-primary apply-button"  style="display: none;">
+                Apply
+            </button>
+            <button type="button" class="btn btn-secondary clear-button" style="display: none;">
+                Clear
+            </button>
+        
+    </t>
+</templates>

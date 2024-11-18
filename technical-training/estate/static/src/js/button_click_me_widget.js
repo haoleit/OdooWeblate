@@ -1,14 +1,14 @@
 odoo.define("estate.TreeViewButton", function (require) {
   "use strict";
 
-  var ListRenderer = require("web.ListRenderer");
-  var ListController = require("web.ListController");
+  const ListRenderer = require("web.ListRenderer");
+  const ListController = require("web.ListController");
   const viewRegistry = require("web.view_registry");
 
-  var ListView = require("web.ListView");
+  const ListView = require("web.ListView");
 
   // Extend the ListRenderer to add a custom button only for demo.widget model
-  // var TreeViewButtonRenderer = ListRenderer.extend({
+  // const TreeViewButtonRenderer = ListRenderer.extend({
   //   renderButtons: function ($node) {
   //     if (this.state.model !== "demo.widget") {
   //       return this._super.apply(this, arguments);
@@ -17,7 +17,7 @@ odoo.define("estate.TreeViewButton", function (require) {
   //     this._super.apply(this, arguments);
 
   //     // Create the custom button
-  //     var $button = $("<button>", {
+  //     const $button = $("<button>", {
   //       type: "button",
   //       class: "btn btn-primary",
   //       text: "Click Me",
@@ -32,12 +32,12 @@ odoo.define("estate.TreeViewButton", function (require) {
   //   },
   // });
 
-  var TreeViewButtonDemoWidgetController = ListController.extend({
+  const TreeViewButtonDemoWidgetController = ListController.extend({
     renderButtons: function ($node) {
       this._super.apply(this, arguments);
 
       if (this.$buttons) {
-        var $button = $("<button>", {
+        const $button = $("<button>", {
           type: "button",
           class: "btn btn-primary",
           text: "Click Me",
@@ -56,7 +56,7 @@ odoo.define("estate.TreeViewButton", function (require) {
   });
 
   // Override ListView to use the custom renderer and controller for demo.widget only
-  var TreeViewButtonListView = ListView.extend({
+  const TreeViewButtonListView = ListView.extend({
     config: _.extend({}, ListView.prototype.config, {
       // Renderer: TreeViewButtonRenderer,
       Controller: TreeViewButtonDemoWidgetController,
@@ -65,4 +65,8 @@ odoo.define("estate.TreeViewButton", function (require) {
 
   // Register the view only for demo.widget model
   viewRegistry.add("tree_with_button", TreeViewButtonListView);
+
+  return {
+    TreeViewButtonDemoWidgetController: TreeViewButtonDemoWidgetController,
+  };
 });

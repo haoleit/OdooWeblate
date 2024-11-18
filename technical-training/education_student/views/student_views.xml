@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="education_student_action" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="res_model">education.student</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>
+                Create and manage student records.
+            </p>
+        </field>
+    </record>
+
+    <record id="education_student_view_student" model="ir.ui.view">
+        <field name="name">education.student.student</field>
+        <field name="model">education.student</field>
+        <field name="arch" type="xml">
+            <student></student>
+        </field>
+    </record>
+
+    <record id="education_student_action_student" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="education_student_action" />
+        <field name="view_id" ref="education_student_view_student" />
+        <field name="view_mode">student</field>
+    </record>
+</odoo>

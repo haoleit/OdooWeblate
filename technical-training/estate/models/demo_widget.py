@@ -7,7 +7,8 @@ class DemoWidget(models.Model):
 
     name = fields.Char(string="Name")
     color = fields.Integer(string="Color")  
-    date = fields.Date(string="Date",store=True)
+    from_date = fields.Date(string="From Date") 
+    to_date = fields.Date(string="To Date") 
 
 
    

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <!-- Link to your JavaScript and XML template files -->
+            <!-- <link rel="stylesheet" type="text/scss" href="/estate/static/src/scss/color_pill.scss"/> -->
+            <!-- <link rel="stylesheet" type="text/scss" href="/estate/static/src/scss/mm_yyyy.scss"/> -->
+            <script  type="text/javascript" src="/education_student/static/src/js/student_model.js"></script>
+            <script  type="text/javascript" src="/education_student/static/src/js/student_controller.js"></script>
+            <script  type="text/javascript" src="/education_student/static/src/js/student_renderer.js"></script>
+            <script  type="text/javascript" src="/education_student/static/src/js/student_view.js"></script>
+            
+            
+        </xpath>
+    </template>
+</odoo>
