@@ -14,7 +14,7 @@ odoo.define("estate.TreeViewCheckboxExtend", function (require) {
   const ExtendedTreeViewCheckboxController = CheckboxWidgetController.extend({
     renderButtons: function ($node) {
       this._super.apply(this, arguments);
-
+      this.reload({});
       if (this.$buttons) {
         // Render buttons using QWeb template
         const $template = $(qweb.render("TreeView.Checkboxes"));
@@ -53,6 +53,7 @@ odoo.define("estate.TreeViewCheckboxExtend", function (require) {
     },
 
     _onApplyButtonClick: function () {
+      let context = this.model.get(this.handle, { raw: true }).getContext();
       const hideColorChecked = this.$buttons
         .find(".hide-color-checkbox")
         .is(":checked");
@@ -68,6 +69,7 @@ odoo.define("estate.TreeViewCheckboxExtend", function (require) {
     },
 
     _onClearButtonClick: function () {
+      let context = this.model.get(this.handle, { raw: true }).getContext();
       // Reset all checkboxes
       this.$buttons
         .find(".hide-color-checkbox, .hide-date-checkbox")

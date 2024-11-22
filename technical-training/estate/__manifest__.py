@@ -18,6 +18,7 @@ Module Estate provide management solution.
         'security/ir.model.access.csv',
         'views/assets.xml',
         'views/demo_widget_views.xml',
+        'views/estate_templates.xml',
         'views/estate_property_views.xml',
         'views/estate_property_type_views.xml',
         'views/estate_property_tag_views.xml',

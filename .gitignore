@@ -166,3 +166,4 @@ cython_debug/
 .DS_Store
 .idea/Odoo-Training.iml
 .idea/workspace.xml
+/technical-training/web_responsive

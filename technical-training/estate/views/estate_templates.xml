@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="estates_page" name="Estate List with Pagination and Search">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1>Available Estates</h1>
+                
+                <!-- Search Form -->
+                <form method="get" action="/estates" class="mb-3">
+                    <input type="text" name="search" t-att-value="search or ''" placeholder="Search..." class="form-control" />
+                    <button type="submit" class="btn btn-primary mt-2">Search</button>
+                </form>
+
+                <!-- Estates List -->
+                <div class="row">
+                    <t t-foreach="estates" t-as="estate">
+                        <div class="col-md-3 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <a t-att-href="'/estates/%d' % estate.id" class="text-decoration-none">
+                                            <t t-esc="estate.name" />
+                                        </a>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+                <!-- Pagination -->
+                <t t-if="total_pages > 1">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li t-if="page &gt; 1" class="page-item">
+                                <a t-att-href="'/estates?page=%d&amp;search=%s' % (page - 1, search)" class="page-link">Previous</a>
+                            </li>
+                            <t t-foreach="range(1, total_pages + 1)" t-as="p">
+                                <li t-att-class="'page-item active' if p == page else 'page-item'">
+                                    <a t-att-href="'/estates?page=%d&amp;search=%s' % (p, search)" class="page-link"><t t-esc="p" /></a>
+                                </li>
+                            </t>
+                            <li t-if="page &lt; total_pages" class="page-item">
+                                <a t-att-href="'/estates?page=%d&amp;search=%s' % (page + 1, search)" class="page-link">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </t>
+            </div>
+        </t>
+    </template>
+
+    <template id="estate_detail_page" name="Estate Details">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1><t t-esc="estate.name" /></h1>
+                <p><t t-esc="estate.description" /></p>
+                <p>Selling Price: <t t-esc="estate.selling_price" /></p>
+            </div>
+        </t>
+    </template>
+
+</odoo>
