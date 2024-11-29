@@ -27,14 +27,14 @@
                         <button name="action_show_popup" type="object" string="Click me" class="btn-primary"   />
                     </header> -->
                     <field name="name"/>
-                    <field name="color" widget="int_color"/>
-                    <!-- <field name="color" widget="int_color" invisible="context.get('hideColor',True)" /> -->
+                    <!-- <field name="color" widget="int_color"/> -->
+                    <field name="color" widget="int_color" invisible="context.get('hideColor',True)" />
                     <!-- <field name="date" widget="mm_yyyy"/> -->
-                    <field name="from_date" widget="date"/> 
-                    <field name="to_date" widget="date"/> 
+                    <!-- <field name="from_date" widget="date"/>  -->
+                    <!-- <field name="to_date" widget="date"/>  -->
                     
-                    <!-- <field name="from_date" widget="date" invisible="context.get('context.hideDate',True)"/> -->
-                    <!-- <field name="to_date" widget="date" invisible="context.get('context.hideDate',True)"/> -->
+                    <field name="from_date" widget="date" invisible="context.get('hideDate',True)"/>
+                    <field name="to_date" widget="date" invisible="context.get('hideDate',True)"/>
                 </tree>
             </field>
         </record>
@@ -49,7 +49,7 @@
                     Click to create a new property type.
                 </p>
             </field>
-            <!-- <field name="context">{'hideColor': False, 'hideDate': False}</field>  -->
+            <field name="context">{'hideColor': False, 'hideDate': False}</field> 
         </record>
         
     </odoo>

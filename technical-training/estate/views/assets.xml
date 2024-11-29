@@ -4,6 +4,7 @@
         <xpath expr="." position="inside">
             <!-- Link to your custom SCSS file -->
             <link rel="stylesheet" type="text/scss" href="/estate/static/src/scss/color_pill.scss"/>
+            
             <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
             <!-- Link to your custom JavaScript files -->
             <script type="text/javascript" src="/estate/static/src/js/button_click_me_widget.js"></script>
@@ -17,6 +18,22 @@
             <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
             
            
+        </xpath>
+    </template>
+    <template id="custom_bemo_homepage" inherit_id="web.assets_frontend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/scss" href="/estate/static/src/scss/bemo.scss"/>
+        </xpath>
+    </template>
+    <template id="custom_primary_variable" inherit_id="web._assets_primary_variables">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/scss" href="/estate/static/src/scss/custom_theme.scss"/>
+        </xpath>
+    </template>
+
+    <template id="assets_common_custom" inherit_id="web._assets_helpers">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/scss" href="/estate/static/src/scss/navbar_custom.scss"/>
         </xpath>
     </template>
 </odoo>

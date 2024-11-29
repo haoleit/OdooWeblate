@@ -7,3 +7,4 @@ access_estate_property_tag_manager,estate.property.tag,model_estate_property_tag
 access_report_buyer_offer,access.report.buyer.offer,model_report_buyer_offer,,1,1,1,1
 access_buyer_offer_export_xlsx_wizard,access.buyer.offer.export.xlsx.wizard,model_buyer_offer_export_xlsx_wizard,,1,1,1,1
 access_demo_widget,access.demo.widget,model_demo_widget,,1,1,1,1
+access_website_user_feedback,access.website.user.feedback,model_website_user_feedback,,1,1,1,1

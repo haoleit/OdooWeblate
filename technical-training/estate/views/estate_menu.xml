@@ -88,4 +88,14 @@
         action="action_demo_widget"
         sequence="4"
     />
+
+
+    <menuitem 
+        id="menu_website_feedback" 
+        name="Feedback" 
+        sequence="5" 
+        parent="menu_estate_root" 
+        action="action_website_user_feedback" 
+    />
+   
 </odoo>

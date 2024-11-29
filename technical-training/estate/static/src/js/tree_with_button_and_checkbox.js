@@ -14,11 +14,44 @@ odoo.define("estate.TreeViewCheckboxExtend", function (require) {
   const ExtendedTreeViewCheckboxController = CheckboxWidgetController.extend({
     renderButtons: function ($node) {
       this._super.apply(this, arguments);
-      this.reload({});
+
+      const hideColorChecked = JSON.parse(
+        localStorage.getItem("hideColor") || "false"
+      );
+
+      const hideDateChecked = JSON.parse(
+        localStorage.getItem("hideDate") || "false"
+      );
+
       if (this.$buttons) {
         // Render buttons using QWeb template
         const $template = $(qweb.render("TreeView.Checkboxes"));
         this.$buttons.append($template);
+
+        // Apply stored states to checkboxes
+        this.$buttons
+          .find(".hide-color-checkbox")
+          .prop("checked", hideColorChecked);
+
+        this.$buttons
+          .find(".hide-color-checkbox")
+          .prop("disabled", hideColorChecked);
+
+        this.$buttons
+          .find(".hide-date-checkbox")
+          .prop("checked", hideDateChecked);
+
+        this.$buttons
+          .find(".hide-date-checkbox")
+          .prop("disabled", hideDateChecked);
+
+        // Show or hide Apply and Clear buttons based on stored states
+        this.$buttons
+          .find(".apply-button")
+          .toggle(hideColorChecked || hideDateChecked);
+        this.$buttons
+          .find(".clear-button")
+          .toggle(hideColorChecked || hideDateChecked);
 
         // Attach event listeners
         this.$buttons
@@ -62,21 +95,69 @@ odoo.define("estate.TreeViewCheckboxExtend", function (require) {
         .is(":checked");
 
       // Call renderer to toggle field visibility
-      this.renderer.toggleFields({
+      // this.renderer.toggleFields({
+      //   hideColor: hideColorChecked,
+      //   hideDate: hideDateChecked,
+      // });
+
+      context = {
+        ...context,
         hideColor: hideColorChecked,
         hideDate: hideDateChecked,
+      };
+
+      // Save states to local storage
+      localStorage.setItem("hideColor", JSON.stringify(hideColorChecked));
+      localStorage.setItem("hideDate", JSON.stringify(hideDateChecked));
+
+      this.trigger_up("do_action", {
+        action: {
+          type: "ir.actions.act_window",
+          res_model: "demo.widget",
+          name: "Demo Widget",
+          context: context,
+          views: [[false, "list"]],
+          target: "current",
+        },
+        options: {
+          clear_breadcrumbs: true,
+        },
       });
     },
 
     _onClearButtonClick: function () {
-      let context = this.model.get(this.handle, { raw: true }).getContext();
       // Reset all checkboxes
+      let context = this.model.get(this.handle, { raw: true }).getContext();
       this.$buttons
         .find(".hide-color-checkbox, .hide-date-checkbox")
         .prop("checked", false);
 
       // Reset field visibility
-      this.renderer.toggleFields({ hideColor: false, hideDate: false });
+      // this.renderer.toggleFields({ hideColor: false, hideDate: false });
+
+      context = {
+        ...context,
+        hideColor: false,
+        hideDate: false,
+      };
+
+      // Save reset states to local storage
+      localStorage.setItem("hideColor", JSON.stringify(false));
+      localStorage.setItem("hideDate", JSON.stringify(false));
+
+      this.trigger_up("do_action", {
+        action: {
+          type: "ir.actions.act_window",
+          res_model: "demo.widget",
+          name: "Estate Widget",
+          context: context,
+          views: [[false, "list"]],
+          target: "current",
+        },
+        options: {
+          clear_breadcrumbs: true,
+        },
+      });
 
       // Hide Apply and Clear buttons
       this.$buttons.find(".apply-button, .clear-button").hide();

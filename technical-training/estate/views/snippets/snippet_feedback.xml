@@ -1,0 +1,47 @@
+<odoo>
+    <template id="s_snippet_feedback" name="Snippet Feedback">
+        <section class="snippet_feedback_section">
+            <div class="container">
+                <div class="feedback_image">
+                    <img src="/estate/static/src/img/feedback.png" alt="" loading="lazy"/>
+                </div>
+                <div class="feedback_content">
+                    <div class="feedback_title">
+                        <img src="/estate/static/src/img/section-icon.png" loading="lazy"/>
+                        <h1>Feedback Form</h1>
+                    </div>
+                    <form action="/feedback/submit" method="post">
+                        <textarea class="form-control feedback_input" name="description" placeholder="Write your feedback here..." required="required" />
+                        <button type="submit" class="btn btn-primary mt-3">Gửi đi</button>
+                    </form>
+                </div>
+                
+            </div>
+        </section>
+    </template>
+
+    
+    <template id="index_feedback" inherit_id="website.snippets">
+        <xpath expr="//div[@id='snippet_content']/div[hasclass('o_panel_body')]" position="inside">
+            <t t-snippet="estate.s_snippet_feedback"/>
+        </xpath>
+
+    
+    </template>
+
+    <!-- <template id="s_custom_snippet_options" inherit_id="website.snippet_options" name="Custom snippet options">
+        <xpath expr="//*[@t-set='so_content_addition_selector']" position="inside">, .s_snippet_feedback</xpath>
+    </template>
+     -->
+    <template id="feedback_thanks_template" name="Feedback Thanks">
+        <t t-call="website.layout">
+            <div class="container mt-5 text-center">
+                <h1>Thank You!</h1>
+                <p>Your feedback has been submitted successfully.</p>
+                <a href="/" class="btn btn-secondary">Return to Home</a>
+            </div>
+        </t>
+    </template>
+   
+
+</odoo>
