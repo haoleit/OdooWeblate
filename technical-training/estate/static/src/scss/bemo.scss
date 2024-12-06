@@ -1,3 +1,19 @@
+@mixin respond-to($breakpoint){
+    @if $breakpoint == xs{
+        @media (max-width: 575.98px){ @content; }
+    }@else if $breakpoint == sm {
+        @media (max-width: 767.98px){ @content; }
+    }@else if $breakpoint == md {
+        @media (max-width: 991.98px){ @content; }
+    }@else if $breakpoint == lg {
+        @media (max-width: 1199.98px){ @content; }
+    }@else if $breakpoint == xl {
+        @media (max-width: 1399.98px){ @content; }
+    }
+    
+}
+
+
 .bemo-homepage {
     // General Styles
 
@@ -8,6 +24,17 @@
             font-size: 40px;
             font-weight: 700;
             line-height: 60px;
+
+
+            @include respond-to(md) {
+                font-size: 32px;
+                line-height: 48px;
+            }
+
+            @include respond-to(sm) {
+                font-size: 28px;
+                line-height: 42px;
+            }
         }
 
         .hero-subtitle {
@@ -24,6 +51,10 @@
             font-weight: 700;
             color: white;
             padding: 12px 24px;
+
+            @include respond-to(sm) {
+                padding: 8px 16px;
+            }
         }
     }
 
@@ -42,12 +73,24 @@
                 width: 40px;
                 height: 45px;
             }
+
+            @include respond-to(md) {
+                font-size: 20px;
+            }
+
+            @include respond-to(sm) {
+                font-size: 18px;
+            }
         }
 
         .news-card {
             width: 359px;
             border-radius: 8px;
             box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.08);
+
+            @include respond-to(md) {
+                width: 90%;
+            }
 
             img {
                 width: 100%;
@@ -71,9 +114,17 @@
                     font-weight: 700;
                 }
 
+                @include respond-to(md) {
+                    font-size: 16px;
+                }
+
                 &-description {
                     color: #808080;
                     font-size: 16px;
+
+                    @include respond-to(sm) {
+                        font-size: 14px;
+                    }
                 }
             }
         }
@@ -87,6 +138,10 @@
         background-repeat: no-repeat;
         min-height: 652px;
         padding: 40px 0;
+
+        @include respond-to(sm) {
+            padding: 20px;
+        }
 
         .company-intention-header {
             display: flex;
@@ -109,6 +164,18 @@
 
         #main_img{
             position: relative;
+
+            @include respond-to(md) {
+                max-width: 80%;
+            }
+        }
+
+
+        #widget-1,
+        #widget-2 {
+            @include respond-to(sm) {
+                display: none;
+            }
         }
 
         #widget-1{
@@ -129,6 +196,10 @@
             font-size: 16px;
             line-height: 24px;
             margin-bottom: 16px;
+
+            @include respond-to(md) {
+                font-size: 14px;
+            }
         }
 
         
@@ -147,14 +218,31 @@
             img {
                 margin-right: 8px;
             }
+
+
+            @include respond-to(md) {
+                font-size: 20px;
+            }
+        
+            @include respond-to(sm) {
+                font-size: 18px;
+            }
         }
     
         .gallery-item {
-                .video-container {
-                    position: relative;
-                    width: 100%;
-                    height: 270px;
-    
+            .video-container {
+                position: relative;
+                width: 100%;
+                height: 270px;
+
+                @include respond-to(md) {
+                    height: 200px;
+                    }
+            
+                @include respond-to(sm) {
+                    height: 150px;
+                }
+
                 .video-placeholder {
                     background: #ccc;
                     display: flex;
@@ -162,27 +250,38 @@
                     align-items: center;
                     height: 100%;
                     position: relative;
-    
-                   
-    
-                    video{
+
+                    video {
                         width: 100%;
                         height: 100%;
                         object-fit: cover;
                     }
                 }
+            
             }
     
             .image-container {
                 position: relative;
                 overflow: hidden;
-                
                 height: 270px;
+
+
+                @include respond-to(md) {
+                    height: 200px;
+                }
+          
+                @include respond-to(sm) {
+                    height: 150px;
+                    
+                }
     
                 img {
                     width: 100%;
                     height: 100%;
-                    
+                    @include respond-to(sm) {
+                        object-fit: scale-down;
+                        
+                    }
                 }
             }
         }
@@ -198,14 +297,18 @@
             justify-content: center;
         }
 
-        .feedback_image{
+        .feedback_image {
             display: flex;
             justify-content: center;
             align-items: center;
             margin-right: 2.75rem;
+
+            @include respond-to(sm) {
+                margin-right: 0;
+            }
         }
 
-        .feedback_content{
+        .feedback_content {
             width: 100%;
             height: 100%;
 
@@ -240,6 +343,10 @@
                 border: none;
                 border-radius: 4px;
                 outline: none;
+                
+                @include respond-to(sm) {
+                    height: 150px;
+                }
             }
 
             .btn-primary {
@@ -249,6 +356,10 @@
                 font-weight: 700;
                 color: white;
                 padding: 12px 24px;
+
+                @include respond-to(sm) {
+                    padding: 10px 20px;
+                }
             }
 
 
@@ -263,13 +374,19 @@
 
 
 .navbar{
-   
-
     .navbar-nav{
-       
         display: flex;
         padding-left: 48px;
-        gap: 44px
+        gap: 44px;
+
+        @include respond-to(md) {
+            gap: 32px;
+        }
+    
+        @include respond-to(sm) {
+            flex-direction: column;
+            gap: 8px;
+        }
     }
     
     .navbar-link{
@@ -292,6 +409,10 @@
     
                 &:hover {
                     color: rgba(0, 0, 0, 0.8);
+                }
+
+                @include respond-to(sm) {
+                    font-size: 14px;
                 }
             } 
         }

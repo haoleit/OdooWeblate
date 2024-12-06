@@ -14,6 +14,7 @@ Module Estate provide management solution.
                 'mail',
                 'report_xlsx'],
     'data': [
+        'data/demo_data_bemo_navbar.xml',
         'data/demo.xml',
         'data/menu_data.xml',
         'data/res_groups.xml',
